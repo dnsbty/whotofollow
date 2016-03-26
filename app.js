@@ -10,11 +10,17 @@ var mongoose = require('mongoose');
 var env = require('node-env-file');
 env(__dirname + '/.env');
 
+// load models and connect to database
+require('./models/Networks')
+require('./models/Accounts');
+mongoose.connect(process.env.DB_URL);
+
 var routes = require('./routes/index');
 var networks = require('./routes/networks');
 var accounts = require('./routes/accounts');
 
 var app = express();
+app.set('env', process.env.NODE_ENV);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
