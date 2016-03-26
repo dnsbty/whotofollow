@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
+/* GET networks listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+	res.send('this will be a list of networks');
 });
 
 module.exports = router;

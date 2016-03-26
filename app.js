@@ -11,7 +11,8 @@ var env = require('node-env-file');
 env(__dirname + '/.env');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var networks = require('./routes/networks');
+var accounts = require('./routes/accounts');
 
 var app = express();
 
@@ -28,7 +29,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/networks', networks);
+app.use('/networks/:network/accounts', accounts);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
