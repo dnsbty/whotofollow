@@ -19,7 +19,10 @@ router.post('/:network/accounts/', function(req, res, next) {
 		return res.status(400).json({ message: 'No name was provided'});
 
 	// make sure there is no duplicate account
-	Account.findOne({ slug: req.body.username.toLowerCase() }, function(err, foundAccount) {
+	Account.findOne({
+		slug: req.body.username.toLowerCase(),
+		network: req.network
+	}, function(err, foundAccount) {
 		if (foundAccount)
 			return res.status(409).json({ message: 'That account was already submitted'});
 
@@ -54,13 +57,13 @@ router.post('/:network/accounts/:account/upvotes', function(req, res, next) {
 router.param('network', function(req, res, next, networkName) {
 	Network.findOne({ slug: networkName }, function (err, network){
 		if (err)
-			next(err);
+			return next(err);
 
 		if (!network)
-			next(new Error('That network isn\'t supported yet'));
+			return next(new Error('That network isn\'t supported yet'));
 
 		req.network = network;
-		next();
+		return next();
 	});
 });
 
